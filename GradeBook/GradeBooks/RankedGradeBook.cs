@@ -18,27 +18,21 @@ namespace GradeBook.GradeBooks
                 throw new InvalidOperationException("Ranked-grading reqiures a minimum of 5 students to work");
             }
 
-            double over, under;
-            over = under = 1;
+            double under = 0;
 
             foreach (Student student in Students)
             {
-                if (student.AverageGrade >= averageGrade)
-                {
-                    over += 1;
-                } else
+                if (student.AverageGrade < averageGrade)
                 {
                     under += 1;
                 }
             }
 
-            if (over == 0) {
-                return 'A';
-            }else if (under == 0){
+            if (under == 0){
                 return 'F';
             }
 
-            int percent = (int)Math.Ceiling(over / over + under + 1);
+            int percent = (int)Math.Ceiling((under / (Students.Count-1))*100);
             if (percent > 80)
             {
                 return 'A';
